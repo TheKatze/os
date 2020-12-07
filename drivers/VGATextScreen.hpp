@@ -18,16 +18,19 @@ public:
     void print(char* message, UPoint location, Colour foreground, Colour background);
     void print(char* message, UPoint location, Colour foreground);
     void print(char* message, UPoint location);
+    void print(char* message, Colour foreground, Colour background);
+    void print(char* message, Colour foreground);
     void print(char* message);
 
-    UPoint getCursorLocation();
     void setCursorLocation(UPoint location);
+    UPoint getCursorLocation() const;
+    UPoint readCursorLocation();
 
     void setColourScheme(Colour foreground, Colour background);
 private:
-    unsigned int VIDEO_ADDRESS = 0xb8000;
-    unsigned short MAX_ROWS = 25;
-    unsigned short MAX_COLS = 80;
+    const void* VIDEO_ADDRESS = (void*) 0xb8000;
+    unsigned short maxRows = 25;
+    unsigned short maxCols = 80;
 
     Port _ctrl;
     Port _data;
@@ -38,5 +41,8 @@ private:
     UPoint _cursorLocation;
 
     void print(char* message, UPoint location, unsigned char colour);
+
+    unsigned int getMemoryOffset() const;
+
 };
 

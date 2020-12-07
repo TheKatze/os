@@ -1,5 +1,5 @@
 #include "Kernel.hpp"
-#include "../drivers/Port.hpp"
+
 
 extern "C"
 int main(void) {
@@ -8,12 +8,11 @@ int main(void) {
     return 0;
 }
 
-Kernel::Kernel(void) {
-    char* video_memory = (char*) 0xb8000;
-    *video_memory = '-';
+Kernel::Kernel() : _vgaText() {
+    _vgaText.clearScreen();
 }
 
-void Kernel::run(void) {
+void Kernel::run() {
     while (true) {}
 }
 

@@ -1,9 +1,12 @@
 extern "C" int main(void);
 
-class Kernel {
-public:
-    Kernel(void);
+#include "../drivers/VGATextScreen.hpp"
 
-    void run(void);
+class Kernel {
+    VGATextScreen _vgaText;
+public:
+    Kernel();
+
+    void run();
 };
 
