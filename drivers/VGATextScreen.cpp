@@ -14,9 +14,9 @@ void VGATextScreen::clearScreen() {
     unsigned int screenSize = maxCols * maxRows;
 
     char* vgaScreen = (char*) VIDEO_ADDRESS;
-    char colour = _background << 1 | _foreground;
+    char colour = colourToChar(_foreground, _background);
 
-    for (int i = 0; i < screenSize; i += 2) {
+    for (int i = 0; i < screenSize * 2; i += 2) {
         vgaScreen[i] = ' ';
         vgaScreen[i + 1] = colour;
     }
@@ -25,8 +25,7 @@ void VGATextScreen::clearScreen() {
 }
 
 void VGATextScreen::print(char* message, UPoint location, Colour foreground, Colour background) {
-    unsigned char colour = background << 1 | foreground;
-    print(message, location, colour);
+    print(message, location, colourToChar(foreground, background));
 }
 
 void VGATextScreen::print(char *message, UPoint location, VGATextScreen::Colour foreground) {
@@ -38,8 +37,7 @@ void VGATextScreen::print(char* message, UPoint location) {
 }
 
 void VGATextScreen::print(char *message, VGATextScreen::Colour foreground, VGATextScreen::Colour background) {
-    unsigned char colour = background << 1 | foreground;
-    print(message, _cursorLocation, colour);
+    print(message, _cursorLocation, colourToChar(foreground, background));
 }
 
 void VGATextScreen::print(char *message, VGATextScreen::Colour foreground) {
@@ -50,22 +48,24 @@ void VGATextScreen::print(char* message) {
     print(message, _cursorLocation);
 }
 
-void VGATextScreen::print(char *message, UPoint location, unsigned char colour) {
+void VGATextScreen::print(char *message, UPoint location, char colour) {
     char* vgaScreen = (char*) VIDEO_ADDRESS;
+    _cursorLocation = location;
 
-    for (char* c = message; c != nullptr; c++) {
+    for (char* c = message; *c != '\0'; c++) {
         char character = *c;
 
         switch (character) {
             case '\n':
-                break;
             case '\r':
+                setCursorLocation({0, _cursorLocation.y + 1});
                 break;
             default:
-
-        }
-        if (character == '\n') {
-            setCursorLocation({0, _cursorLocation.y + 1});
+                unsigned int offset = getMemoryOffset();
+                vgaScreen[offset] = character;
+                vgaScreen[offset + 1] = colour;
+                setCursorLocation({_cursorLocation.x + 1, _cursorLocation.y});
+                break;
         }
     }
 }
@@ -100,5 +100,5 @@ UPoint VGATextScreen::readCursorLocation() {
 }
 
 unsigned int VGATextScreen::getMemoryOffset() const {
-    return 0;
+    return 2 * (_cursorLocation.y * maxCols + _cursorLocation.x);
 }

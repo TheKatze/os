@@ -3,7 +3,7 @@
 class Port {
     unsigned short _portAddress;
 public:
-    Port(unsigned short portAddress);
+    explicit Port(unsigned short portAddress);
 
     unsigned char readByte() const;
     void writeByte(unsigned char data) const;
