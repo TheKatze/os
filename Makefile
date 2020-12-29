@@ -5,11 +5,11 @@ HEADERS = $(wildcard kernel/*.hpp drivers/*.hpp util/*.hpp)
 OBJ = ${SOURCES:.cpp=.o}
 
 # Change this if your cross-compiler is somewhere else
-CC = /usr/local/i386elfgcc/bin/i386-elf-gcc
+CC = clang++ -target i386-pc-none-elf
 GDB = /usr/local/i386elfgcc/bin/i386-elf-gdb
-LD = /usr/local/i386elfgcc/bin/i386-elf-ld
+LD = ld.lld
 # -g: Use debugging symbols in gcc
-CFLAGS = -g -std=c++20
+CFLAGS = -g -std=c++2a
 
 # First rule is run by default
 os-image.bin: boot/bootsect.bin kernel.bin

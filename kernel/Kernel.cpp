@@ -1,5 +1,5 @@
 #include "Kernel.hpp"
-
+#include "../drivers/VGATextScreen.hpp"
 
 extern "C"
 int main(void) {
