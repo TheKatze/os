@@ -15,22 +15,24 @@ public:
     };
 
     void clearScreen();
-    void print(char* message, UPoint location, Colour foreground, Colour background);
-    void print(char* message, UPoint location, Colour foreground);
-    void print(char* message, UPoint location);
-    void print(char* message, Colour foreground, Colour background);
-    void print(char* message, Colour foreground);
-    void print(char* message);
+    void print(const char* message, Point<unsigned> location, Colour foreground, Colour background);
+    void print(const char* message, Point<unsigned> location, Colour foreground);
+    void print(const char* message, Point<unsigned> location);
+    void print(const char* message, Colour foreground, Colour background);
+    void print(const char* message, Colour foreground);
+    void print(const char* message);
 
-    void setCursorLocation(UPoint location);
-    UPoint getCursorLocation() const;
-    UPoint readCursorLocation();
+    void newLine();
+
+    void setCursorLocation(Point<unsigned> location);
+    Point<unsigned> getCursorLocation() const;
+    Point<unsigned> readCursorLocation();
 
     void setColourScheme(Colour foreground, Colour background);
 private:
     const void* VIDEO_ADDRESS = (void*) 0xb8000;
-    unsigned short maxRows = 25;
-    unsigned short maxCols = 80;
+    const unsigned int MAX_ROWS = 25;
+    const unsigned int MAX_COLS = 80;
 
     Port _ctrl;
     Port _data;
@@ -38,11 +40,12 @@ private:
     Colour _foreground;
     Colour _background;
 
-    UPoint _cursorLocation;
+    Point<unsigned> _cursorLocation;
 
-    void print(char* message, UPoint location, char colour);
+    void print(const char* message, Point<unsigned> location, char colour);
 
     unsigned int getMemoryOffset() const;
+    unsigned int getMemoryOffset(Point<unsigned> location) const;
 
     static inline char colourToChar(Colour foreground, Colour background) {
         return (char)(background << 4 | foreground);

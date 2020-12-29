@@ -1,5 +1,4 @@
 #include "Kernel.hpp"
-#include "../drivers/VGATextScreen.hpp"
 
 extern "C"
 int main(void) {
@@ -16,5 +15,7 @@ Kernel::Kernel() : _vgaText() {
 }
 
 void Kernel::run() {
-    while (true) {}
+    while (true) {
+        __asm__("hlt");
+    }
 }
