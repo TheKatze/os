@@ -12,6 +12,10 @@ Kernel::Kernel() : _vgaText() {
 
     _vgaText.print("Hello, World!\n");
     _vgaText.print("This is my OS");
+
+    _vgaText.newLine();
+
+    _vgaText.print("uwu");
 }
 
 void Kernel::run() {

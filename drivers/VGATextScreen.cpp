@@ -56,7 +56,11 @@ void VGATextScreen::newLine() {
     {
         for (unsigned x = 0; x < MAX_COLS; x++)
         {
-            vgaScreen[getMemoryOffset({x, y - 1})] = vgaScreen[getMemoryOffset({x, y})];            
+            vgaScreen[getMemoryOffset({x, y - 1})] = vgaScreen[getMemoryOffset({x, y})];
+            vgaScreen[getMemoryOffset({x, y - 1}) + 1] = vgaScreen[getMemoryOffset({x, y}) + 1]; 
+
+            vgaScreen[getMemoryOffset({x, y})] = ' ';
+            vgaScreen[getMemoryOffset({x, y}) + 1] = colourToChar(_foreground, _background);           
         }
         
     }
