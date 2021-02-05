@@ -4,8 +4,8 @@
 VGATextScreen::VGATextScreen() 
     : _ctrl(0x3d4)
     , _data(0x3d5)
-    , _foreground(Colour::White)
-    , _background(Colour::Black)
+    , _foreground(Color::White)
+    , _background(Color::Black)
     , _cursorLocation(readCursorLocation()) {
 
 }
@@ -24,11 +24,11 @@ void VGATextScreen::clearScreen() {
     setCursorLocation({0, MAX_ROWS - 1});
 }
 
-void VGATextScreen::print(const char* message, Point<unsigned> location, Colour foreground, Colour background) {
+void VGATextScreen::print(const char* message, Point<unsigned> location, Color foreground, Color background) {
     print(message, location, colourToChar(foreground, background));
 }
 
-void VGATextScreen::print(const char* message, Point<unsigned> location, VGATextScreen::Colour foreground) {
+void VGATextScreen::print(const char* message, Point<unsigned> location, VGATextScreen::Color foreground) {
     print(message, location, foreground, _background);
 }
 
@@ -36,11 +36,11 @@ void VGATextScreen::print(const char* message, Point<unsigned> location) {
     print(message, location, _foreground);
 }
 
-void VGATextScreen::print(const char* message, VGATextScreen::Colour foreground, VGATextScreen::Colour background) {
+void VGATextScreen::print(const char* message, VGATextScreen::Color foreground, VGATextScreen::Color background) {
     print(message, _cursorLocation, colourToChar(foreground, background));
 }
 
-void VGATextScreen::print(const char* message, VGATextScreen::Colour foreground) {
+void VGATextScreen::print(const char* message, VGATextScreen::Color foreground) {
     print(message, foreground, _background);
 }
 
@@ -106,7 +106,7 @@ Point<unsigned> VGATextScreen::getCursorLocation() const {
     return _cursorLocation;
 }
 
-void VGATextScreen::setColourScheme(VGATextScreen::Colour foreground, VGATextScreen::Colour background) {
+void VGATextScreen::setColourScheme(VGATextScreen::Color foreground, VGATextScreen::Color background) {
     _foreground = foreground;
     _background = background;
 }

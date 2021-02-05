@@ -11,7 +11,7 @@ Kernel::Kernel() : _vgaText() {
     _vgaText.clearScreen();
 
     _vgaText.print("Hello, World!\n");
-    _vgaText.print("This is my OS");
+    _vgaText.print("This is my OS", VGATextScreen::Color::LightRed);
 
     _vgaText.newLine();
 
